@@ -1,0 +1,15 @@
+{
+  "name": "weather-mail",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-06",
+  "triggers": {
+    "crons": ["5 * * * *"]
+  },
+  "vars": {
+    "MAIL_FROM": "you@example.com",
+    "MAIL_TO": "user1@example.com,user2@example.com",
+    "LAT": "53.3498",
+    "LON": "-6.2603",
+    "SEND_HOURS_LOCAL": "7,14"
+  }
+}
