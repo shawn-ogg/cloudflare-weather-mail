@@ -1,6 +1,10 @@
 export interface Env {
   SMTP2GO_API_KEY: string;
   MAIL_TO: string;
+  MAIL_FROM: string;
+  LAT?: string;
+  LON?: string;
+  SEND_HOURS_LOCAL?: string;
 }
 
 export default {
@@ -55,7 +59,7 @@ async function sendForecastEmail(env: Env, testMode = false) {
   let weather = null;
 
   try {
-    weather = await getWeatherWithRetry();
+    weather = await getWeatherWithRetry(env);
   } catch (err) {
     console.log('Weather forecast unavailable', err);
   }
@@ -142,13 +146,16 @@ ${get('tomorrow')}
 `;
 }
 
-async function getWeatherWithRetry(attempts = 3) {
+async function getWeatherWithRetry(env: Env, attempts = 3) {
   let lastError;
+
+  const lat = env.LAT ?? "53.3250";
+  const lon = env.LON ?? "-6.2520";
 
   for (let i = 1; i <= attempts; i++) {
     try {
       const resp = await fetch(
-        `http://openaccess.pf.api.met.ie/metno-wdb2ts/locationforecast?lat=${env.LAT};long=${env.LON}`,
+        `http://openaccess.pf.api.met.ie/metno-wdb2ts/locationforecast?lat=${lat};long=${lon}`,
         {
           cf: {
             cacheTtl: 0,

@@ -15,6 +15,9 @@
     "@aws-sdk/client-sesv2": "^3"
   },
   "scripts": {
-    "lint": "eslint ."
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   }
 }
